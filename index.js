@@ -48,3 +48,6 @@ Hello(app);
 app.listen(process.env.PORT || 4000);
 
 
+app.get("/api", (req, res) => {
+  res.send("API is running");
+});

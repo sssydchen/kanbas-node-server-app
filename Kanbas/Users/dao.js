@@ -1,10 +1,5 @@
 import model from "./model.js";
 
-// export const createUser = (user) => {
-//  const newUser = { ...user, _id: Date.now().toString() };
-//  users = [...users, newUser];
-//  return newUser;
-// };
 export const createUser = (user) => {
   delete user._id
   return model.create(user);
