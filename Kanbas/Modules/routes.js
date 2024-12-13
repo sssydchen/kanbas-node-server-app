@@ -30,11 +30,23 @@ export default function ModuleRoutes(app) {
       res.status(500).json({ error: "Internal Server Error" });
     }
   });
+  // app.put("/api/modules/:moduleId", async (req, res) => {
+  //   const { moduleId } = req.params;
+  //   const moduleUpdates = req.body;
+  //   const status = await modulesDao.updateModule(moduleId, moduleUpdates);
+  //   res.send(status);
+  // });
   app.put("/api/modules/:moduleId", async (req, res) => {
     const { moduleId } = req.params;
-    const moduleUpdates = req.body;
-    const status = await modulesDao.updateModule(moduleId, moduleUpdates);
-    res.send(status);
+    const moduleUpdates = { ...req.body };
+    if (moduleUpdates._id) delete moduleUpdates._id; 
+    try {
+      const status = await modulesDao.updateModule(moduleId, moduleUpdates);
+      res.json(status);
+    } catch (error) {
+      console.error("Error updating module:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   });
  app.delete("/api/modules/:moduleId", async (req, res) => {
    const { moduleId } = req.params;
